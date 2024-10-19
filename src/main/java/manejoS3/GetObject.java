@@ -12,15 +12,12 @@ import java.io.OutputStream;
 
 public class GetObject {
 
-
-
     public static void main(String[] args) throws Exception {
 
         // Read inputs - bucket name, lab region
         String bucketName = args[0];
         Region labRegion = Region.of(args[1]);
         String objectKey = args[2];
-
 
 
         // Create S3 service client
@@ -36,7 +33,6 @@ public class GetObject {
         s3.close(); //Close S3 service client
 
     }
-
 
 
     private static void obtenerS3Objects(S3Client s3, String bucketName, String objectKey) {
@@ -60,13 +56,12 @@ public class GetObject {
             // PART 2
 
             //Write to a local file on your disk
-            File localFile = new File("localFile.json");
+            File localFile = new File(objectKey);
             OutputStream os = new FileOutputStream(localFile);
             os.write(data);
             os.close();
 
             System.out.println("    Object downloaded from S3 is written to: " + localFile.getAbsolutePath());
-
 
 
             } catch (Exception e) {

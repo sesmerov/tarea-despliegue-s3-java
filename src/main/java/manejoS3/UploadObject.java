@@ -66,9 +66,8 @@ public class UploadObject {
 
             System.out.format("\n\n Subida completada.\n     Tag: %s \n", response.eTag());
 
-        } catch (S3Exception e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
-            System.exit(1);
         }
 
     }

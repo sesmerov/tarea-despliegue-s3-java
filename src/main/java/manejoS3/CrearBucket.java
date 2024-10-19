@@ -106,8 +106,9 @@ public class CrearBucket {
 
         } catch (S3Exception e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            System.exit(1);
 
+        }catch(Exception e){
+            System.err.println(e.getMessage());
         }
 
     }
