@@ -29,11 +29,13 @@ public class CrearBucket {
                 .region(labRegion)
                 .build();
 
+
         //------------Comprobamos si existe el bucket, utilizamos HeadBucket
 
-        if (!bucketExisting(s3, bucketName)) {
-            createBucket(s3, bucketName);   // Creación del bucket
-        }else{
+
+        boolean check = bucketExisting(s3, bucketName);
+
+        while(check){
             System.out.println("¿Quieres cambiar el nombre del bucket? S/N");
             String option = sc.nextLine().toUpperCase();
 
@@ -41,14 +43,20 @@ public class CrearBucket {
                 System.out.println("Introduce S o N");
                 option = sc.nextLine().toUpperCase();
             }
-
             if(option.equals("S")){
                 System.out.println("Indica nombre del Bucket:");
                 bucketName = sc.nextLine();
-                createBucket(s3, bucketName);
+                if(!bucketExisting(s3, bucketName)){
+                    check = false;
+                }
             }else{
                 System.out.println("Operación cancelada.");
+                break;
             }
+        }
+
+        if(!check){
+            createBucket(s3, bucketName);
         }
 
         s3.close();  //Cerramos el cliente S3
