@@ -45,7 +45,7 @@ public class Main {
                 String bucketNameUpload = sc.nextLine();
                 System.out.println("Indica nombre que tendrá el objeto a CARGAR:");
                 String objectKeyUpload = sc.nextLine();
-                System.out.println("Indica ruta del fichero a CARGAR:");
+                System.out.println("Indica ruta del fichero a CARGAR + nombre (Ej. C:\\Users\\User\\OneDrive\\Fotos\\photo.png)");
                 String filePath = sc.nextLine();
                 String[] argumentosUpload =  {bucketNameUpload, labRegion.toString(), objectKeyUpload, filePath};
 
@@ -56,7 +56,12 @@ public class Main {
                 String bucketNameGet = sc.nextLine();
                 System.out.println("Indica nombre del objeto a DESCARGAR (DEBE EXISTIR):");
                 String objectKeyGet = sc.nextLine();
-                String[] argumentosGet = {bucketNameGet,labRegion.toString(),objectKeyGet};
+                System.out.println("Indica ruta donde DESCARGAR:");
+                String fileRouteGet = sc.nextLine();
+                System.out.println("Indica nombre con el que descargar DESCARGAR:");
+                String fileNameGet = sc.nextLine();
+
+                String[] argumentosGet = {bucketNameGet,labRegion.toString(),objectKeyGet,fileRouteGet,fileNameGet};
 
                 GetObject.main(argumentosGet);
                 break;

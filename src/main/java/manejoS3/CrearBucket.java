@@ -11,10 +11,13 @@ import software.amazon.awssdk.services.s3.model.HeadBucketResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
+import java.util.Scanner;
+
 
 public class CrearBucket {
     public static void main(String[] args) throws Exception {
 
+        Scanner sc = new Scanner(System.in);
         //----- Nombre del bucket y región en la que funcionamos
         String bucketName = args[0];
         Region labRegion = Region.of(args[1]);
@@ -30,11 +33,26 @@ public class CrearBucket {
 
         if (!bucketExisting(s3, bucketName)) {
             createBucket(s3, bucketName);   // Creación del bucket
+        }else{
+            System.out.println("¿Quieres cambiar el nombre del bucket? S/N");
+            String option = sc.nextLine().toUpperCase();
+
+            while(!option.equals("S") && !option.equals("N")){
+                System.out.println("Introduce S o N");
+                option = sc.nextLine().toUpperCase();
+            }
+
+            if(option.equals("S")){
+                System.out.println("Indica nombre del Bucket:");
+                bucketName = sc.nextLine();
+                createBucket(s3, bucketName);
+            }else{
+                System.out.println("Operación cancelada.");
+            }
         }
 
         s3.close();  //Cerramos el cliente S3
     }
-
 
     public static boolean bucketExisting(S3Client s3, String bucketName) {
         boolean check = true;
@@ -51,6 +69,7 @@ public class CrearBucket {
 
             if (result.sdkHttpResponse().statusCode() == 200) {
                 System.out.println("    El Bucket ya existe! ");
+
             }
         }
 

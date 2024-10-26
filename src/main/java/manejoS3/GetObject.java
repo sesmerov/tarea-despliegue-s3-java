@@ -18,6 +18,9 @@ public class GetObject {
         String bucketName = args[0];
         Region labRegion = Region.of(args[1]);
         String objectKey = args[2];
+        String fileRoute = args[3];
+        String fileName = args[4];
+
 
 
         // Create S3 service client
@@ -28,14 +31,13 @@ public class GetObject {
 
         // Recuperamos el archivo del bucket
 
-        obtenerS3Objects(s3, bucketName, objectKey);
+        obtenerS3Objects(s3, bucketName, objectKey, fileRoute, fileName);
 
         s3.close(); //Close S3 service client
 
     }
 
-
-    private static void obtenerS3Objects(S3Client s3, String bucketName, String objectKey) {
+    private static void obtenerS3Objects(S3Client s3, String bucketName, String objectKey, String fileRoute, String fileName) {
 
         try {
             // Build request using bucket name and key to download object
@@ -56,7 +58,7 @@ public class GetObject {
             // PART 2
 
             //Write to a local file on your disk
-            File localFile = new File(objectKey);
+            File localFile = new File(fileRoute+"/"+fileName);
             OutputStream os = new FileOutputStream(localFile);
             os.write(data);
             os.close();
